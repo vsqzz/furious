@@ -2,36 +2,35 @@ import discord
 from discord.ext import commands
 import random
 import requests
+import os
 
 intents = discord.Intents.all()  # Enable all intents
 bot = commands.Bot(command_prefix='!', intents=intents)
 
-# Event: Bot is ready
 @bot.event
 async def on_ready():
     print(f'Logged in as {bot.user.name}')
 
-# Event: Member joins the server
-@bot.event
-async def on_member_join(member):
-    guild = member.guild  # Get the guild (server) where the member joined
-    role = discord.utils.get(guild.roles, name="Members")  # Replace with your desired role name
-    if role:
-        await member.add_roles(role)
-        print(f'{member.display_name} has joined and been given the role {role.name}.')
-    else:
-        print(f'The role "Members" was not found.')
-
-# Command: Ping (just for testing)
 @bot.command()
 async def ping(ctx):
     latency = bot.latency * 1000  # Convert to ms
     await ctx.send(f'Pong! Latency: {latency:.2f}ms')
 
-# Other commands...
+# Your other commands...
 
-# Replace 'YOUR_DISCORD_BOT_TOKEN' with your actual bot token
-TOKEN = 'MTI1MzQ5Njc2ODEzODcwNzA0NQ.G3HaEa.I0UbRRdQoumEtK7mHTkbGSzFmVZFyeOZJDii08'
+# Automatically assign role to new members
+@bot.event
+async def on_member_join(member):
+    role = discord.utils.get(member.guild.roles, name='members')
+    if role:
+        await member.add_roles(role)
+    await member.send(f'Welcome to the server, {member.name}!')
+
+# Fetch token from environment variables
+TOKEN = os.getenv('DISCORD_BOT_TOKEN')
 
 # Run the bot
-bot.run(TOKEN)
+if TOKEN:
+    bot.run(TOKEN)
+else:
+    print("Bot token not found. Please set the DISCORD_BOT_TOKEN environment variable.")
