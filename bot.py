@@ -31,7 +31,7 @@ async def ping(ctx):
 # Other commands...
 
 # Replace 'YOUR_DISCORD_BOT_TOKEN' with your actual bot token
-TOKEN = 'MTI1MzQ5Njc2ODEzODcwNzA0NQ.GAFm4m.WBgYocuGHAz6g0J7aAyGW89_lz5PFWtn5nPymQ'
+TOKEN = 'MTI1MzQ5Njc2ODEzODcwNzA0NQ.GW3E2d.5PgV3KIpBRAo84aORnxSW3Bj0pvSDNmGET-10g'
 
 # Run the bot
 bot.run(TOKEN)
